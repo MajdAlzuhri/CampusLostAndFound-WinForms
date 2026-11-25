@@ -50,7 +50,7 @@ The project strictly implements a **3-Tier Architecture** to ensure separation o
 > *Note: Upload your screenshots to the `Images/` folder in the repository and update the filenames below.*
 
 ### 1. Login & Authentication
-![Login Screen](Images/screenshot_login.png)
+![Uploading Login Screen.png…]()
 
 ### 2. Admin Dashboard
 ![Admin Dashboard](Images/screenshot_admin_dashboard.png)
