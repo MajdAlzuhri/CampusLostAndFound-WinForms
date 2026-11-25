@@ -50,19 +50,24 @@ The project strictly implements a **3-Tier Architecture** to ensure separation o
 > *Note: Upload your screenshots to the `Images/` folder in the repository and update the filenames below.*
 
 ### 1. Login & Authentication
-![Uploading Login Screen.png…]()
+<img width="1185" height="692" alt="image" src="https://github.com/user-attachments/assets/7c587a7a-2d22-4a41-bff6-559ec77f378b" />
 
 ### 2. Admin Dashboard
-![Admin Dashboard](Images/screenshot_admin_dashboard.png)
+<img width="1577" height="926" alt="image" src="https://github.com/user-attachments/assets/bf7bd7a2-fb03-4ca2-a86f-6e5da7312d12" />
+<img width="1575" height="927" alt="image" src="https://github.com/user-attachments/assets/3cf94730-ff36-4625-8702-4c451095ef76" />
+
 
 ### 3. Lost & Found Items Management
-![Items Management](Images/screenshot_items_management.png)
+<img width="1575" height="930" alt="Lost Management" src="https://github.com/user-attachments/assets/5abc84e2-d8a6-429d-ad35-12caf1bb19e0" />
+
 
 ### 4. Claims Verification Workflow
-![Claims Verification](Images/screenshot_claims.png)
+<img width="1577" height="923" alt="Manage Claims" src="https://github.com/user-attachments/assets/29fa0456-dddd-462c-9e74-b33b27be3ec1" />
+<img width="1575" height="925" alt="Claims" src="https://github.com/user-attachments/assets/9e005239-ebef-4312-8356-6a139acde307" />
+
 
 ### 5. User Portal & Item Claiming
-![User Dashboard](Images/screenshot_user_dashboard.png)
+<img width="1577" height="935" alt="image" src="https://github.com/user-attachments/assets/c24ada36-2b58-4f48-b7a9-b8d969a5aa30" />
 
 ---
 
