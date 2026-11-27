@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Windows.Forms;
 using CampusLostAndFound.BLL;
 
@@ -25,7 +26,31 @@ namespace CampusLostAndFound
             lblClaimsCount.Text = summary.TotalClaims.ToString();
             lblUsersCount.Text = summary.TotalUsers.ToString();
 
-            dgvRecentItems.DataSource = clsDashboard.GetRecentItems();
+            DataTable dtRecent = clsDashboard.GetRecentItems();
+
+            if (!dtRecent.Columns.Contains("RowNo"))
+            {
+                dtRecent.Columns.Add("RowNo", typeof(int));
+                dtRecent.Columns["RowNo"].SetOrdinal(0);
+            }
+
+            for (int i = 0; i < dtRecent.Rows.Count; i++)
+            {
+                dtRecent.Rows[i]["RowNo"] = i + 1;
+            }
+
+            dgvRecentItems.DataSource = dtRecent;
+
+            if (dgvRecentItems.Columns.Count > 0)
+            {
+                dgvRecentItems.Columns["RowNo"].HeaderText = "#";
+                dgvRecentItems.Columns["RowNo"].Width = 45;
+
+                // إخفاء الـ ID الحقيقي إن كان راجعاً من الاستعلام
+                if (dgvRecentItems.Columns.Contains("ItemID"))
+                    dgvRecentItems.Columns["ItemID"].Visible = false;
+            }
+
             dgvRecentItems.ClearSelection();
         }
 
@@ -36,7 +61,6 @@ namespace CampusLostAndFound
                 uiPanel4.Visible = false; // استبدل uiPanel4 باسم الكارد/البانل الخاص بـ Total Users عندك
             }
             _LoadDashboardData();
-            
         }
     }
 }

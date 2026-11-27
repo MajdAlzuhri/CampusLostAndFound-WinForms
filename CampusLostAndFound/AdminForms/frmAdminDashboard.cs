@@ -93,5 +93,11 @@ namespace CampusLostAndFound
         {
             OpenChildForm(new AdminForms.frmManageClaims(), "Claims Management");
         }
+
+        private void btnManageCategories_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new AdminForms.frmManageCategories(), "Manage Categories");
+
+        }
     }
 }

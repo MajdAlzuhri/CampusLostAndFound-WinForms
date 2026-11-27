@@ -85,7 +85,6 @@
             this.cbFilterBy.ItemHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
             this.cbFilterBy.Items.AddRange(new object[] {
             "None",
-            "User ID",
             "Username",
             "Role",
             "Is Active"});
@@ -190,7 +189,7 @@
             this.deleteUserToolStripMenuItem,
             this.toggleActiveToolStripMenuItem});
             this.cmsUsers.Name = "uiContextMenuStrip1";
-            this.cmsUsers.Size = new System.Drawing.Size(266, 122);
+            this.cmsUsers.Size = new System.Drawing.Size(266, 94);
             this.cmsUsers.Opening += new System.ComponentModel.CancelEventHandler(this.cmsUsers_Opening);
             // 
             // editUserToolStripMenuItem

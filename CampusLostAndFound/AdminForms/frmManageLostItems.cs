@@ -14,22 +14,52 @@ namespace CampusLostAndFound.AdminForms
             InitializeComponent();
         }
 
+        private void _ReNumberRows()
+        {
+            if (dgvLostItems.Columns.Contains("RowNo"))
+            {
+                for (int i = 0; i < dgvLostItems.Rows.Count; i++)
+                {
+                    dgvLostItems.Rows[i].Cells["RowNo"].Value = i + 1;
+                }
+            }
+        }
+
         private void _RefreshLostItemsList()
         {
             _dtLostItems = clsItem.GetAllLostItems();
+
+            if (!_dtLostItems.Columns.Contains("RowNo"))
+            {
+                _dtLostItems.Columns.Add("RowNo", typeof(int));
+                _dtLostItems.Columns["RowNo"].SetOrdinal(0);
+            }
+
+            for (int i = 0; i < _dtLostItems.Rows.Count; i++)
+            {
+                _dtLostItems.Rows[i]["RowNo"] = i + 1;
+            }
+
             dgvLostItems.DataSource = _dtLostItems;
             lblRecordCount.Text = dgvLostItems.Rows.Count.ToString();
 
-            if (dgvLostItems.Rows.Count > 0)
+            if (dgvLostItems.Columns.Count > 0)
             {
-                dgvLostItems.Columns[0].HeaderText = "Item ID";
-                dgvLostItems.Columns[1].HeaderText = "Item Name";
-                dgvLostItems.Columns[2].HeaderText = "Category";
-                dgvLostItems.Columns[3].HeaderText = "Color";
-                dgvLostItems.Columns[4].HeaderText = "Date Lost";
-                dgvLostItems.Columns[5].HeaderText = "Location";
-                dgvLostItems.Columns[6].HeaderText = "Status";
-                dgvLostItems.Columns[7].HeaderText = "Reported By";
+                dgvLostItems.Columns["RowNo"].HeaderText = "#";
+                dgvLostItems.Columns["RowNo"].Width = 45;
+
+                // إخفاء الـ ID الحقيقي المخزن في قاعدة البيانات
+                dgvLostItems.Columns["ItemID"].Visible = false;
+
+                dgvLostItems.Columns["ItemName"].HeaderText = "Item Name";
+                dgvLostItems.Columns["Category"].HeaderText = "Category";
+                dgvLostItems.Columns["Color"].HeaderText = "Color";
+                dgvLostItems.Columns["ItemDate"].HeaderText = "Date Lost";
+                dgvLostItems.Columns["Location"].HeaderText = "Location";
+                dgvLostItems.Columns["Status"].HeaderText = "Status";
+
+                if (dgvLostItems.Columns.Contains("ReportedBy"))
+                    dgvLostItems.Columns["ReportedBy"].HeaderText = "Reported By";
             }
 
             dgvLostItems.ClearSelection();
@@ -71,6 +101,7 @@ namespace CampusLostAndFound.AdminForms
                 else if (_dtLostItems != null)
                 {
                     _dtLostItems.DefaultView.RowFilter = "";
+                    _ReNumberRows();
                     lblRecordCount.Text = dgvLostItems.Rows.Count.ToString();
                 }
             }
@@ -85,6 +116,7 @@ namespace CampusLostAndFound.AdminForms
             else
                 _dtLostItems.DefaultView.RowFilter = string.Format("[Status] = '{0}'", cbStatusFilter.Text);
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvLostItems.Rows.Count.ToString();
         }
 
@@ -96,7 +128,7 @@ namespace CampusLostAndFound.AdminForms
             switch (cbFilterBy.Text)
             {
                 case "Item ID":
-                    filterColumn = _dtLostItems.Columns[0].ColumnName;
+                    filterColumn = "ItemID";
                     break;
                 case "Item Name":
                     filterColumn = "ItemName";
@@ -117,6 +149,7 @@ namespace CampusLostAndFound.AdminForms
             if (rawText == "" || filterColumn == "None")
             {
                 _dtLostItems.DefaultView.RowFilter = "";
+                _ReNumberRows();
                 lblRecordCount.Text = dgvLostItems.Rows.Count.ToString();
                 return;
             }
@@ -132,6 +165,7 @@ namespace CampusLostAndFound.AdminForms
                 _dtLostItems.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, safeValue);
             }
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvLostItems.Rows.Count.ToString();
         }
 
@@ -149,7 +183,7 @@ namespace CampusLostAndFound.AdminForms
                 return;
             }
 
-            string currentStatus = dgvLostItems.CurrentRow.Cells[6].Value.ToString();
+            string currentStatus = dgvLostItems.CurrentRow.Cells["Status"].Value.ToString();
             bool isOpen = (currentStatus == "Open");
 
             markAsReturnedToolStripMenuItem.Enabled = isOpen;
@@ -166,7 +200,7 @@ namespace CampusLostAndFound.AdminForms
         private void editItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvLostItems.CurrentRow == null) return;
-            int itemID = (int)dgvLostItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvLostItems.CurrentRow.Cells["ItemID"].Value;
             frmAddEditItem frm = new frmAddEditItem(itemID);
             frm.ShowDialog();
             _RefreshLostItemsList();
@@ -176,8 +210,8 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvLostItems.CurrentRow == null) return;
 
-            int itemID = (int)dgvLostItems.CurrentRow.Cells[0].Value;
-            string itemName = dgvLostItems.CurrentRow.Cells[1].Value.ToString();
+            int itemID = (int)dgvLostItems.CurrentRow.Cells["ItemID"].Value;
+            string itemName = dgvLostItems.CurrentRow.Cells["ItemName"].Value.ToString();
 
             if (MessageBox.Show($"Are you sure you want to delete [{itemName}]?", "Confirm Delete",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -198,7 +232,7 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvLostItems.CurrentRow == null) return;
 
-            int itemID = (int)dgvLostItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvLostItems.CurrentRow.Cells["ItemID"].Value;
             clsItem item = clsItem.Find(itemID);
 
             if (item != null)
@@ -216,9 +250,9 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvLostItems.CurrentRow == null) return;
 
-            int itemID = (int)dgvLostItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvLostItems.CurrentRow.Cells["ItemID"].Value;
 
-            if (MessageBox.Show($"Move Lost Item #{itemID} to Found Items?", "Confirm Transfer",
+            if (MessageBox.Show("Move selected Lost Item to Found Items?", "Confirm Transfer",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 clsItem item = clsItem.Find(itemID);

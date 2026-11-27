@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsCategoryData.cs" />
     <Compile Include="clsClaimDataAccess.cs" />
     <Compile Include="clsItemDataAccess.cs" />
     <Compile Include="clsDashboardDataAccess.cs" />

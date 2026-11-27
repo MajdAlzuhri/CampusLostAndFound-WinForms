@@ -39,6 +39,7 @@
             this.uiPanel2 = new Sunny.UI.UIPanel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblPageTiltle = new Sunny.UI.UISmoothLabel();
+            this.btnManageCategories = new Sunny.UI.UISymbolButton();
             this.uiPanel1.SuspendLayout();
             this.uiPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -47,6 +48,7 @@
             // uiPanel1
             // 
             this.uiPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.uiPanel1.Controls.Add(this.btnManageCategories);
             this.uiPanel1.Controls.Add(this.btn_Claims);
             this.uiPanel1.Controls.Add(this.btn_Logout);
             this.uiPanel1.Controls.Add(this.btn_FoundItems);
@@ -272,6 +274,32 @@
             this.lblPageTiltle.Text = "Admin";
             this.lblPageTiltle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // btnManageCategories
+            // 
+            this.btnManageCategories.BackColor = System.Drawing.Color.Transparent;
+            this.btnManageCategories.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnManageCategories.FillColor = System.Drawing.Color.Transparent;
+            this.btnManageCategories.FillColor2 = System.Drawing.Color.Transparent;
+            this.btnManageCategories.FillHoverColor = System.Drawing.Color.Gold;
+            this.btnManageCategories.FillPressColor = System.Drawing.Color.Transparent;
+            this.btnManageCategories.FillSelectedColor = System.Drawing.Color.Transparent;
+            this.btnManageCategories.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnManageCategories.Image = global::CampusLostAndFound.Properties.Resources.categorization;
+            this.btnManageCategories.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnManageCategories.Location = new System.Drawing.Point(13, 345);
+            this.btnManageCategories.MinimumSize = new System.Drawing.Size(1, 1);
+            this.btnManageCategories.Name = "btnManageCategories";
+            this.btnManageCategories.Padding = new System.Windows.Forms.Padding(15, 10, 10, 10);
+            this.btnManageCategories.Radius = 20;
+            this.btnManageCategories.RectColor = System.Drawing.Color.Transparent;
+            this.btnManageCategories.Size = new System.Drawing.Size(260, 50);
+            this.btnManageCategories.SymbolOffset = new System.Drawing.Point(-15, 0);
+            this.btnManageCategories.TabIndex = 7;
+            this.btnManageCategories.Text = "        Categories";
+            this.btnManageCategories.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnManageCategories.TipsFont = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnManageCategories.Click += new System.EventHandler(this.btnManageCategories_Click);
+            // 
             // frmAdminDashboard
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -304,5 +332,6 @@
         private Sunny.UI.UISymbolButton btn_Logout;
         private System.Windows.Forms.PictureBox pictureBox1;
         private Sunny.UI.UISymbolButton btn_Claims;
+        private Sunny.UI.UISymbolButton btnManageCategories;
     }
 }

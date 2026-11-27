@@ -1,8 +1,9 @@
-﻿using System;
+﻿using CampusLostAndFound.BLL;
+using System;
+using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using CampusLostAndFound.BLL;
 
 namespace CampusLostAndFound.AdminForms
 {
@@ -37,9 +38,18 @@ namespace CampusLostAndFound.AdminForms
             txtDescription.MaxLength = 500;
         }
 
+        private void _FillCategoriesInComboBox()
+        {
+            DataTable dt = clsCategory.GetAllCategories();
+            cbCategory.DataSource = dt;
+            cbCategory.DisplayMember = "CategoryName";
+            cbCategory.ValueMember = "CategoryName";
+        }
+
         private void _ResetDefaultValues()
         {
             _SetMaxLengths();
+            _FillCategoriesInComboBox();
 
             if (_Mode == enMode.AddNew)
             {
@@ -59,7 +69,10 @@ namespace CampusLostAndFound.AdminForms
 
             lblItemID.Text = "???";
             txtItemName.Text = "";
-            cbCategory.SelectedIndex = 0;
+
+            if (cbCategory.Items.Count > 0)
+                cbCategory.SelectedIndex = 0;
+
             txtColor.Text = "";
             dtpItemDate.Value = DateTime.Now;
             txtLocation.Text = "";
@@ -82,8 +95,11 @@ namespace CampusLostAndFound.AdminForms
             lblItemID.Text = _Item.ItemID.ToString();
             txtItemName.Text = _Item.ItemName;
 
-            int catIndex = cbCategory.FindString(_Item.Category);
-            cbCategory.SelectedIndex = (catIndex != -1) ? catIndex : 0;
+            int catIndex = cbCategory.FindStringExact(_Item.Category);
+            if (catIndex != -1)
+                cbCategory.SelectedIndex = catIndex;
+            else if (cbCategory.Items.Count > 0)
+                cbCategory.SelectedIndex = 0;
 
             txtColor.Text = _Item.Color;
             dtpItemDate.Value = _Item.ItemDate;
@@ -132,6 +148,13 @@ namespace CampusLostAndFound.AdminForms
                 return false;
             }
 
+            if (cbCategory.SelectedIndex == -1 || string.IsNullOrWhiteSpace(cbCategory.Text))
+            {
+                MessageBox.Show("Please select a valid Category.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cbCategory.Focus();
+                return false;
+            }
+
             // Color (if entered) must contain letters/spaces/hyphens only — no numbers or symbols
             if (!string.IsNullOrEmpty(color) && !Regex.IsMatch(color, @"^[a-zA-Z\s\-]+$"))
             {
@@ -150,6 +173,7 @@ namespace CampusLostAndFound.AdminForms
             if (dtpItemDate.Value.Date > DateTime.Now.Date)
             {
                 MessageBox.Show("Date cannot be in the future.", "Invalid Date", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                dtpItemDate.Focus();
                 return false;
             }
 
@@ -194,6 +218,11 @@ namespace CampusLostAndFound.AdminForms
         }
 
         private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnClose_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }

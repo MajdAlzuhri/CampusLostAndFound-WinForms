@@ -15,19 +15,49 @@ namespace CampusLostAndFound
             InitializeComponent();
         }
 
+        private void _ReNumberRows()
+        {
+            if (dgvUsers.Columns.Contains("RowNo"))
+            {
+                for (int i = 0; i < dgvUsers.Rows.Count; i++)
+                {
+                    dgvUsers.Rows[i].Cells["RowNo"].Value = i + 1;
+                }
+            }
+        }
+
         private void _RefreshUsersList()
         {
             _dtAllUsers = clsUser.GetAllUsers();
+
+            if (!_dtAllUsers.Columns.Contains("RowNo"))
+            {
+                _dtAllUsers.Columns.Add("RowNo", typeof(int));
+                _dtAllUsers.Columns["RowNo"].SetOrdinal(0);
+            }
+
+            for (int i = 0; i < _dtAllUsers.Rows.Count; i++)
+            {
+                _dtAllUsers.Rows[i]["RowNo"] = i + 1;
+            }
+
             dgvUsers.DataSource = _dtAllUsers;
             lblRecordCount.Text = dgvUsers.Rows.Count.ToString();
 
-            if (dgvUsers.Rows.Count > 0)
+            if (dgvUsers.Columns.Count > 0)
             {
-                dgvUsers.Columns[0].HeaderText = "User ID";
-                dgvUsers.Columns[1].HeaderText = "Username";
-                dgvUsers.Columns[2].HeaderText = "Role";
-                dgvUsers.Columns[3].HeaderText = "Is Active";
+                dgvUsers.Columns["RowNo"].HeaderText = "#";
+                dgvUsers.Columns["RowNo"].Width = 45;
+
+                // إخفاء الـ ID الحقيقي المخزن في قاعدة البيانات
+                dgvUsers.Columns["UserID"].Visible = false;
+
+                dgvUsers.Columns["Username"].HeaderText = "Username";
+                dgvUsers.Columns["Role"].HeaderText = "Role";
+                dgvUsers.Columns["IsActive"].HeaderText = "Is Active";
             }
+
+            dgvUsers.ClearSelection();
         }
 
         private void frmManageUsers_Load(object sender, EventArgs e)
@@ -60,6 +90,7 @@ namespace CampusLostAndFound
                 else if (_dtAllUsers != null)
                 {
                     _dtAllUsers.DefaultView.RowFilter = "";
+                    _ReNumberRows();
                     lblRecordCount.Text = dgvUsers.Rows.Count.ToString();
                 }
             }
@@ -82,6 +113,7 @@ namespace CampusLostAndFound
                     break;
             }
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvUsers.Rows.Count.ToString();
         }
 
@@ -123,6 +155,7 @@ namespace CampusLostAndFound
             if (rawText == "" || filterColumn == "None")
             {
                 _dtAllUsers.DefaultView.RowFilter = "";
+                _ReNumberRows();
                 lblRecordCount.Text = dgvUsers.Rows.Count.ToString();
                 return;
             }
@@ -145,6 +178,7 @@ namespace CampusLostAndFound
                 _dtAllUsers.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, safeValue);
             }
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvUsers.Rows.Count.ToString();
         }
 
@@ -159,7 +193,7 @@ namespace CampusLostAndFound
         {
             if (dgvUsers.CurrentRow == null) return;
 
-            int userID = (int)dgvUsers.CurrentRow.Cells[0].Value;
+            int userID = (int)dgvUsers.CurrentRow.Cells["UserID"].Value;
 
             frmAddEditUser frm = new frmAddEditUser(userID);
             frm.ShowDialog();
@@ -170,7 +204,7 @@ namespace CampusLostAndFound
         {
             if (dgvUsers.CurrentRow == null) return;
 
-            int userID = (int)dgvUsers.CurrentRow.Cells[0].Value;
+            int userID = (int)dgvUsers.CurrentRow.Cells["UserID"].Value;
 
             if (clsGlobal.CurrentUser != null && userID == clsGlobal.CurrentUser.UserID)
             {
@@ -179,7 +213,7 @@ namespace CampusLostAndFound
                 return;
             }
 
-            string username = dgvUsers.CurrentRow.Cells[1].Value.ToString();
+            string username = dgvUsers.CurrentRow.Cells["Username"].Value.ToString();
 
             if (MessageBox.Show($"Are you sure you want to delete user [{username}]?", "Confirm Delete",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -200,7 +234,7 @@ namespace CampusLostAndFound
         {
             if (dgvUsers.CurrentRow == null) return;
 
-            int userID = (int)dgvUsers.CurrentRow.Cells[0].Value;
+            int userID = (int)dgvUsers.CurrentRow.Cells["UserID"].Value;
 
             if (clsGlobal.CurrentUser != null && userID == clsGlobal.CurrentUser.UserID)
             {

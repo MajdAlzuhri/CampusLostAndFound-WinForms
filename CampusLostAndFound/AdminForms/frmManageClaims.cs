@@ -14,23 +14,55 @@ namespace CampusLostAndFound.AdminForms
             InitializeComponent();
         }
 
+        private void _ReNumberRows()
+        {
+            if (dgvClaims.Columns.Contains("RowNo"))
+            {
+                for (int i = 0; i < dgvClaims.Rows.Count; i++)
+                {
+                    dgvClaims.Rows[i].Cells["RowNo"].Value = i + 1;
+                }
+            }
+        }
+
         private void _RefreshClaimsList()
         {
             _dtClaims = clsClaim.GetAllClaims();
+
+            if (!_dtClaims.Columns.Contains("RowNo"))
+            {
+                _dtClaims.Columns.Add("RowNo", typeof(int));
+                _dtClaims.Columns["RowNo"].SetOrdinal(0);
+            }
+
+            for (int i = 0; i < _dtClaims.Rows.Count; i++)
+            {
+                _dtClaims.Rows[i]["RowNo"] = i + 1;
+            }
+
             dgvClaims.DataSource = _dtClaims;
             lblRecordCount.Text = dgvClaims.Rows.Count.ToString();
 
-            if (dgvClaims.Rows.Count > 0)
+            if (dgvClaims.Columns.Count > 0)
             {
-                dgvClaims.Columns[0].HeaderText = "Claim ID";
-                dgvClaims.Columns[1].HeaderText = "Item ID";
-                dgvClaims.Columns[2].HeaderText = "Item Name";
-                dgvClaims.Columns[3].HeaderText = "Claimant Name";
-                dgvClaims.Columns[4].HeaderText = "Phone";
-                dgvClaims.Columns[5].HeaderText = "Verification Notes";
-                dgvClaims.Columns[6].HeaderText = "Status";
-                dgvClaims.Columns[7].HeaderText = "Processed By";
+                dgvClaims.Columns["RowNo"].HeaderText = "#";
+                dgvClaims.Columns["RowNo"].Width = 45;
+
+                // إخفاء أرقام قاعدة البيانات الحقيقية
+                dgvClaims.Columns["ClaimID"].Visible = false;
+                dgvClaims.Columns["ItemID"].Visible = false;
+
+                dgvClaims.Columns["ItemName"].HeaderText = "Item Name";
+                dgvClaims.Columns["ClaimantName"].HeaderText = "Claimant Name";
+                dgvClaims.Columns["Phone"].HeaderText = "Phone";
+                dgvClaims.Columns["VerificationNotes"].HeaderText = "Verification Notes";
+                dgvClaims.Columns["ClaimStatus"].HeaderText = "Status";
+
+                if (dgvClaims.Columns.Contains("ProcessedBy"))
+                    dgvClaims.Columns["ProcessedBy"].HeaderText = "Processed By";
             }
+
+            dgvClaims.ClearSelection();
         }
 
         private void frmManageClaims_Load(object sender, EventArgs e)
@@ -69,6 +101,7 @@ namespace CampusLostAndFound.AdminForms
                 else if (_dtClaims != null)
                 {
                     _dtClaims.DefaultView.RowFilter = "";
+                    _ReNumberRows();
                     lblRecordCount.Text = dgvClaims.Rows.Count.ToString();
                 }
             }
@@ -83,6 +116,7 @@ namespace CampusLostAndFound.AdminForms
             else
                 _dtClaims.DefaultView.RowFilter = string.Format("[ClaimStatus] = '{0}'", cbStatusFilter.Text);
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvClaims.Rows.Count.ToString();
         }
 
@@ -100,24 +134,28 @@ namespace CampusLostAndFound.AdminForms
                 default: filterColumn = "None"; break;
             }
 
-            if (txtFilterValue.Text.Trim() == "" || filterColumn == "None")
+            string rawText = txtFilterValue.Text.Trim();
+
+            if (rawText == "" || filterColumn == "None")
             {
                 _dtClaims.DefaultView.RowFilter = "";
+                _ReNumberRows();
                 lblRecordCount.Text = dgvClaims.Rows.Count.ToString();
                 return;
             }
 
             if (filterColumn == "ClaimID" || filterColumn == "ItemID")
             {
-                if (int.TryParse(txtFilterValue.Text.Trim(), out int id))
+                if (int.TryParse(rawText, out int id))
                     _dtClaims.DefaultView.RowFilter = string.Format("[{0}] = {1}", filterColumn, id);
             }
             else
             {
-                string safeValue = clsGlobal.EscapeRowFilterValue(txtFilterValue.Text.Trim());
-                _dtClaims.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, txtFilterValue.Text.Trim().Replace("'", "''"));
+                string safeValue = clsGlobal.EscapeRowFilterValue(rawText);
+                _dtClaims.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, safeValue);
             }
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvClaims.Rows.Count.ToString();
         }
 
@@ -135,7 +173,7 @@ namespace CampusLostAndFound.AdminForms
                 return;
             }
 
-            string status = dgvClaims.CurrentRow.Cells[6].Value.ToString();
+            string status = dgvClaims.CurrentRow.Cells["ClaimStatus"].Value.ToString();
             bool isPending = (status == "Pending");
 
             approveClaimToolStripMenuItem.Enabled = isPending;
@@ -146,10 +184,10 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvClaims.CurrentRow == null) return;
 
-            int claimID = (int)dgvClaims.CurrentRow.Cells[0].Value;
-            string claimant = dgvClaims.CurrentRow.Cells[3].Value.ToString();
+            int claimID = (int)dgvClaims.CurrentRow.Cells["ClaimID"].Value;
+            string claimant = dgvClaims.CurrentRow.Cells["ClaimantName"].Value.ToString();
 
-            if (MessageBox.Show($"Approve claim #{claimID} for [{claimant}]?\nThis will automatically mark the linked item as Claimed.",
+            if (MessageBox.Show($"Approve claim for [{claimant}]?\nThis will automatically mark the linked item as Claimed.",
                 "Approve Claim", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 clsClaim claim = clsClaim.Find(claimID);
@@ -169,10 +207,10 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvClaims.CurrentRow == null) return;
 
-            int claimID = (int)dgvClaims.CurrentRow.Cells[0].Value;
-            string claimant = dgvClaims.CurrentRow.Cells[3].Value.ToString();
+            int claimID = (int)dgvClaims.CurrentRow.Cells["ClaimID"].Value;
+            string claimant = dgvClaims.CurrentRow.Cells["ClaimantName"].Value.ToString();
 
-            if (MessageBox.Show($"Reject claim #{claimID} for [{claimant}]?",
+            if (MessageBox.Show($"Reject claim for [{claimant}]?",
                 "Reject Claim", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 clsClaim claim = clsClaim.Find(claimID);
@@ -194,7 +232,7 @@ namespace CampusLostAndFound.AdminForms
         private void editClaimToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvClaims.CurrentRow == null) return;
-            int claimID = (int)dgvClaims.CurrentRow.Cells[0].Value;
+            int claimID = (int)dgvClaims.CurrentRow.Cells["ClaimID"].Value;
             frmAddEditClaim frm = new frmAddEditClaim(claimID);
             frm.ShowDialog();
             _RefreshClaimsList();
@@ -204,9 +242,10 @@ namespace CampusLostAndFound.AdminForms
         {
             if (dgvClaims.CurrentRow == null) return;
 
-            int claimID = (int)dgvClaims.CurrentRow.Cells[0].Value;
+            int claimID = (int)dgvClaims.CurrentRow.Cells["ClaimID"].Value;
+            string claimant = dgvClaims.CurrentRow.Cells["ClaimantName"].Value.ToString();
 
-            if (MessageBox.Show($"Are you sure you want to delete Claim #{claimID}?", "Confirm Delete",
+            if (MessageBox.Show($"Are you sure you want to delete claim for [{claimant}]?", "Confirm Delete",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 if (clsClaim.DeleteClaim(claimID))

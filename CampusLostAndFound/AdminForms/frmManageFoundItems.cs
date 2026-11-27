@@ -3,7 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using CampusLostAndFound.BLL;
 
- namespace CampusLostAndFound.AdminForms
+namespace CampusLostAndFound.AdminForms
 {
     public partial class frmManageFoundItems : Form
     {
@@ -14,21 +14,49 @@ using CampusLostAndFound.BLL;
             InitializeComponent();
         }
 
+        private void _ReNumberRows()
+        {
+            if (dgvFoundItems.Columns.Contains("RowNo"))
+            {
+                for (int i = 0; i < dgvFoundItems.Rows.Count; i++)
+                {
+                    dgvFoundItems.Rows[i].Cells["RowNo"].Value = i + 1;
+                }
+            }
+        }
+
         private void _RefreshFoundItemsList()
         {
             _dtFoundItems = clsItem.GetAllFoundItems();
+
+            if (!_dtFoundItems.Columns.Contains("RowNo"))
+            {
+                _dtFoundItems.Columns.Add("RowNo", typeof(int));
+                _dtFoundItems.Columns["RowNo"].SetOrdinal(0);
+            }
+
+            for (int i = 0; i < _dtFoundItems.Rows.Count; i++)
+            {
+                _dtFoundItems.Rows[i]["RowNo"] = i + 1;
+            }
+
             dgvFoundItems.DataSource = _dtFoundItems;
             lblRecordCount.Text = dgvFoundItems.Rows.Count.ToString();
 
-            if (dgvFoundItems.Rows.Count > 0)
+            if (dgvFoundItems.Columns.Count > 0)
             {
-                dgvFoundItems.Columns[0].HeaderText = "Item ID";
-                dgvFoundItems.Columns[1].HeaderText = "Item Name";
-                dgvFoundItems.Columns[2].HeaderText = "Category";
-                dgvFoundItems.Columns[3].HeaderText = "Color";
-                dgvFoundItems.Columns[4].HeaderText = "Location";
-                dgvFoundItems.Columns[5].HeaderText = "Date Found";
-                dgvFoundItems.Columns[6].HeaderText = "Status";
+                dgvFoundItems.Columns["RowNo"].HeaderText = "#";
+                dgvFoundItems.Columns["RowNo"].Width = 45;
+
+                // إخفاء الـ ID الحقيقي المخزن في قاعدة البيانات
+                dgvFoundItems.Columns["ItemID"].Visible = false;
+
+                dgvFoundItems.Columns["ItemName"].HeaderText = "Item Name";
+                dgvFoundItems.Columns["Category"].HeaderText = "Category";
+                dgvFoundItems.Columns["Color"].HeaderText = "Color";
+                dgvFoundItems.Columns["Location"].HeaderText = "Location";
+                dgvFoundItems.Columns["ItemDate"].HeaderText = "Date Found";
+                dgvFoundItems.Columns["Status"].HeaderText = "Status";
             }
 
             dgvFoundItems.ClearSelection();
@@ -71,6 +99,7 @@ using CampusLostAndFound.BLL;
                 else if (_dtFoundItems != null)
                 {
                     _dtFoundItems.DefaultView.RowFilter = "";
+                    _ReNumberRows();
                     lblRecordCount.Text = dgvFoundItems.Rows.Count.ToString();
                 }
             }
@@ -85,6 +114,7 @@ using CampusLostAndFound.BLL;
             else
                 _dtFoundItems.DefaultView.RowFilter = string.Format("[Status] = '{0}'", cbStatusFilter.Text);
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvFoundItems.Rows.Count.ToString();
         }
 
@@ -96,7 +126,7 @@ using CampusLostAndFound.BLL;
             switch (cbFilterBy.Text)
             {
                 case "Item ID":
-                    filterColumn = _dtFoundItems.Columns[0].ColumnName; 
+                    filterColumn = "ItemID";
                     break;
                 case "Item Name":
                     filterColumn = "ItemName";
@@ -120,6 +150,7 @@ using CampusLostAndFound.BLL;
             if (rawText == "" || filterColumn == "None")
             {
                 _dtFoundItems.DefaultView.RowFilter = "";
+                _ReNumberRows();
                 lblRecordCount.Text = dgvFoundItems.Rows.Count.ToString();
                 return;
             }
@@ -135,6 +166,7 @@ using CampusLostAndFound.BLL;
                 _dtFoundItems.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", filterColumn, safeValue);
             }
 
+            _ReNumberRows();
             lblRecordCount.Text = dgvFoundItems.Rows.Count.ToString();
         }
 
@@ -166,7 +198,7 @@ using CampusLostAndFound.BLL;
         private void editItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvFoundItems.CurrentRow == null) return;
-            int itemID = (int)dgvFoundItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvFoundItems.CurrentRow.Cells["ItemID"].Value;
             frmAddEditItem frm = new frmAddEditItem(itemID);
             frm.ShowDialog();
             _RefreshFoundItemsList();
@@ -175,9 +207,10 @@ using CampusLostAndFound.BLL;
         private void markAsClaimedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvFoundItems.CurrentRow == null) return;
-            int itemID = (int)dgvFoundItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvFoundItems.CurrentRow.Cells["ItemID"].Value;
+            string itemName = dgvFoundItems.CurrentRow.Cells["ItemName"].Value.ToString();
 
-            if (MessageBox.Show($"Mark Found Item #{itemID} as Claimed?", "Confirm Status Change",
+            if (MessageBox.Show($"Mark [{itemName}] as Claimed?", "Confirm Status Change",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 clsItem item = clsItem.Find(itemID);
@@ -196,9 +229,10 @@ using CampusLostAndFound.BLL;
         private void deleteItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvFoundItems.CurrentRow == null) return;
-            int itemID = (int)dgvFoundItems.CurrentRow.Cells[0].Value;
+            int itemID = (int)dgvFoundItems.CurrentRow.Cells["ItemID"].Value;
+            string itemName = dgvFoundItems.CurrentRow.Cells["ItemName"].Value.ToString();
 
-            if (MessageBox.Show($"Are you sure you want to delete Found Item #{itemID}?", "Confirm Delete",
+            if (MessageBox.Show($"Are you sure you want to delete [{itemName}]?", "Confirm Delete",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 if (clsItem.DeleteItem(itemID))

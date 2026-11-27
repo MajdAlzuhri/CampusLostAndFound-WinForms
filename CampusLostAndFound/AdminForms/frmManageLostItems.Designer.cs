@@ -21,6 +21,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.lblTitle = new Sunny.UI.UILabel();
             this.pbHeaderIcon = new Sunny.UI.UISymbolLabel();
             this.lblFilterBy = new Sunny.UI.UILabel();
@@ -41,25 +43,10 @@
             this.cmsLostItems.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pbHeaderIcon
-            // 
-            this.pbHeaderIcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.pbHeaderIcon.Location = new System.Drawing.Point(445, 12);
-            this.pbHeaderIcon.Name = "pbHeaderIcon";
-            this.pbHeaderIcon.Size = new System.Drawing.Size(70, 65);
-            this.pbHeaderIcon.Style = Sunny.UI.UIStyle.Custom;
-            this.pbHeaderIcon.StyleCustomMode = true;
-            this.pbHeaderIcon.Symbol = 61736;
-            this.pbHeaderIcon.SymbolColor = System.Drawing.Color.FromArgb(0, 90, 156);
-            this.pbHeaderIcon.SymbolSize = 54;
-            this.pbHeaderIcon.TabIndex = 0;
-            this.pbHeaderIcon.Text = "";
-            this.pbHeaderIcon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // lblTitle
             // 
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.lblTitle.Location = new System.Drawing.Point(330, 82);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(300, 35);
@@ -69,10 +56,24 @@
             this.lblTitle.Text = "Manage Lost Items";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // pbHeaderIcon
+            // 
+            this.pbHeaderIcon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.pbHeaderIcon.Location = new System.Drawing.Point(445, 12);
+            this.pbHeaderIcon.MinimumSize = new System.Drawing.Size(1, 1);
+            this.pbHeaderIcon.Name = "pbHeaderIcon";
+            this.pbHeaderIcon.Size = new System.Drawing.Size(70, 65);
+            this.pbHeaderIcon.Style = Sunny.UI.UIStyle.Custom;
+            this.pbHeaderIcon.StyleCustomMode = true;
+            this.pbHeaderIcon.Symbol = 61736;
+            this.pbHeaderIcon.SymbolColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
+            this.pbHeaderIcon.SymbolSize = 54;
+            this.pbHeaderIcon.TabIndex = 0;
+            // 
             // lblFilterBy
             // 
             this.lblFilterBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblFilterBy.ForeColor = System.Drawing.Color.FromArgb(45, 55, 72);
+            this.lblFilterBy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(55)))), ((int)(((byte)(72)))));
             this.lblFilterBy.Location = new System.Drawing.Point(25, 142);
             this.lblFilterBy.Name = "lblFilterBy";
             this.lblFilterBy.Size = new System.Drawing.Size(85, 30);
@@ -84,36 +85,38 @@
             // 
             // cbFilterBy
             // 
+            this.cbFilterBy.DataSource = null;
             this.cbFilterBy.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.cbFilterBy.FillColor = System.Drawing.Color.White;
             this.cbFilterBy.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.cbFilterBy.ItemHeight = 28;
+            this.cbFilterBy.ItemHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
             this.cbFilterBy.Items.AddRange(new object[] {
             "None",
-            "Item ID",
             "Item Name",
             "Category",
             "Location",
             "Status"});
+            this.cbFilterBy.ItemSelectForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
             this.cbFilterBy.Location = new System.Drawing.Point(115, 138);
             this.cbFilterBy.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbFilterBy.MinimumSize = new System.Drawing.Size(63, 0);
             this.cbFilterBy.Name = "cbFilterBy";
-            this.cbFilterBy.Padding = new System.Windows.Forms.Padding(0, 0, 30, 0);
+            this.cbFilterBy.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.cbFilterBy.Radius = 10;
-            this.cbFilterBy.RectColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.cbFilterBy.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.cbFilterBy.Size = new System.Drawing.Size(195, 38);
             this.cbFilterBy.Style = Sunny.UI.UIStyle.Custom;
             this.cbFilterBy.StyleCustomMode = true;
             this.cbFilterBy.SymbolSize = 24;
             this.cbFilterBy.TabIndex = 3;
             this.cbFilterBy.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
+            this.cbFilterBy.Watermark = "";
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
             // 
             // txtFilterValue
             // 
             this.txtFilterValue.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtFilterValue.FillColor = System.Drawing.Color.White;
             this.txtFilterValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.txtFilterValue.Location = new System.Drawing.Point(322, 138);
             this.txtFilterValue.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -121,7 +124,7 @@
             this.txtFilterValue.Name = "txtFilterValue";
             this.txtFilterValue.Padding = new System.Windows.Forms.Padding(5);
             this.txtFilterValue.Radius = 10;
-            this.txtFilterValue.RectColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.txtFilterValue.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.txtFilterValue.ShowText = false;
             this.txtFilterValue.Size = new System.Drawing.Size(230, 38);
             this.txtFilterValue.Style = Sunny.UI.UIStyle.Custom;
@@ -135,22 +138,25 @@
             // 
             // cbStatusFilter
             // 
+            this.cbStatusFilter.DataSource = null;
             this.cbStatusFilter.DropDownStyle = Sunny.UI.UIDropDownStyle.DropDownList;
             this.cbStatusFilter.FillColor = System.Drawing.Color.White;
             this.cbStatusFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.cbStatusFilter.ItemHeight = 28;
+            this.cbStatusFilter.ItemHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(200)))), ((int)(((byte)(255)))));
             this.cbStatusFilter.Items.AddRange(new object[] {
             "All",
             "Open",
             "Claimed",
             "Returned"});
+            this.cbStatusFilter.ItemSelectForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
             this.cbStatusFilter.Location = new System.Drawing.Point(322, 138);
             this.cbStatusFilter.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbStatusFilter.MinimumSize = new System.Drawing.Size(63, 0);
             this.cbStatusFilter.Name = "cbStatusFilter";
-            this.cbStatusFilter.Padding = new System.Windows.Forms.Padding(0, 0, 30, 0);
+            this.cbStatusFilter.Padding = new System.Windows.Forms.Padding(0, 0, 30, 2);
             this.cbStatusFilter.Radius = 10;
-            this.cbStatusFilter.RectColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.cbStatusFilter.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.cbStatusFilter.Size = new System.Drawing.Size(195, 38);
             this.cbStatusFilter.Style = Sunny.UI.UIStyle.Custom;
             this.cbStatusFilter.StyleCustomMode = true;
@@ -158,19 +164,20 @@
             this.cbStatusFilter.TabIndex = 5;
             this.cbStatusFilter.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.cbStatusFilter.Visible = false;
+            this.cbStatusFilter.Watermark = "";
             this.cbStatusFilter.SelectedIndexChanged += new System.EventHandler(this.cbStatusFilter_SelectedIndexChanged);
             // 
             // btnAddItem
             // 
             this.btnAddItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnAddItem.FillColor = System.Drawing.Color.FromArgb(0, 90, 156);
-            this.btnAddItem.FillHoverColor = System.Drawing.Color.FromArgb(0, 110, 190);
+            this.btnAddItem.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
+            this.btnAddItem.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(110)))), ((int)(((byte)(190)))));
             this.btnAddItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
             this.btnAddItem.Location = new System.Drawing.Point(790, 135);
             this.btnAddItem.MinimumSize = new System.Drawing.Size(1, 1);
             this.btnAddItem.Name = "btnAddItem";
             this.btnAddItem.Radius = 12;
-            this.btnAddItem.RectColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.btnAddItem.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.btnAddItem.Size = new System.Drawing.Size(155, 42);
             this.btnAddItem.Style = Sunny.UI.UIStyle.Custom;
             this.btnAddItem.StyleCustomMode = true;
@@ -186,20 +193,20 @@
             this.dgvLostItems.AllowUserToAddRows = false;
             this.dgvLostItems.AllowUserToDeleteRows = false;
             this.dgvLostItems.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(248, 250, 252);
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.dgvLostItems.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvLostItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.dgvLostItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvLostItems.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvLostItems.BackgroundColor = System.Drawing.Color.White;
             this.dgvLostItems.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvLostItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Single;
+            this.dgvLostItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(0, 90, 156);
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvLostItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
@@ -209,22 +216,37 @@
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(45, 55, 72);
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(219, 234, 254);
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(55)))), ((int)(((byte)(72)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(234)))), ((int)(((byte)(254)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvLostItems.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvLostItems.EnableHeadersVisualStyles = false;
             this.dgvLostItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.dgvLostItems.GridColor = System.Drawing.Color.FromArgb(226, 232, 240);
+            this.dgvLostItems.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
             this.dgvLostItems.Location = new System.Drawing.Point(25, 192);
             this.dgvLostItems.MultiSelect = false;
             this.dgvLostItems.Name = "dgvLostItems";
             this.dgvLostItems.ReadOnly = true;
+            this.dgvLostItems.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(160)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvLostItems.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvLostItems.RowHeadersVisible = false;
+            this.dgvLostItems.RowHeadersWidth = 51;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.dgvLostItems.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dgvLostItems.RowTemplate.Height = 38;
+            this.dgvLostItems.SelectedIndex = -1;
             this.dgvLostItems.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLostItems.Size = new System.Drawing.Size(920, 420);
+            this.dgvLostItems.StripeOddColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.dgvLostItems.Style = Sunny.UI.UIStyle.Custom;
             this.dgvLostItems.StyleCustomMode = true;
             this.dgvLostItems.TabIndex = 7;
@@ -232,6 +254,7 @@
             // cmsLostItems
             // 
             this.cmsLostItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.cmsLostItems.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsLostItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editItemToolStripMenuItem,
             this.deleteItemToolStripMenuItem,
@@ -239,39 +262,39 @@
             this.markAsReturnedToolStripMenuItem,
             this.moveToFoundItemsToolStripMenuItem});
             this.cmsLostItems.Name = "cmsLostItems";
-            this.cmsLostItems.Size = new System.Drawing.Size(215, 100);
+            this.cmsLostItems.Size = new System.Drawing.Size(235, 106);
             this.cmsLostItems.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLostItems_Opening);
             // 
             // editItemToolStripMenuItem
             // 
             this.editItemToolStripMenuItem.Name = "editItemToolStripMenuItem";
-            this.editItemToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.editItemToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.editItemToolStripMenuItem.Text = "Edit Item";
             this.editItemToolStripMenuItem.Click += new System.EventHandler(this.editItemToolStripMenuItem_Click);
             // 
             // deleteItemToolStripMenuItem
             // 
             this.deleteItemToolStripMenuItem.Name = "deleteItemToolStripMenuItem";
-            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.deleteItemToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.deleteItemToolStripMenuItem.Text = "Delete Item";
             this.deleteItemToolStripMenuItem.Click += new System.EventHandler(this.deleteItemToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(231, 6);
             // 
             // markAsReturnedToolStripMenuItem
             // 
             this.markAsReturnedToolStripMenuItem.Name = "markAsReturnedToolStripMenuItem";
-            this.markAsReturnedToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.markAsReturnedToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.markAsReturnedToolStripMenuItem.Text = "Mark as Returned";
             this.markAsReturnedToolStripMenuItem.Click += new System.EventHandler(this.markAsReturnedToolStripMenuItem_Click);
             // 
             // moveToFoundItemsToolStripMenuItem
             // 
             this.moveToFoundItemsToolStripMenuItem.Name = "moveToFoundItemsToolStripMenuItem";
-            this.moveToFoundItemsToolStripMenuItem.Size = new System.Drawing.Size(214, 22);
+            this.moveToFoundItemsToolStripMenuItem.Size = new System.Drawing.Size(234, 24);
             this.moveToFoundItemsToolStripMenuItem.Text = "Move to Found Items";
             this.moveToFoundItemsToolStripMenuItem.Click += new System.EventHandler(this.moveToFoundItemsToolStripMenuItem_Click);
             // 
@@ -279,7 +302,7 @@
             // 
             this.lblRecordsText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecordsText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblRecordsText.ForeColor = System.Drawing.Color.FromArgb(45, 55, 72);
+            this.lblRecordsText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(55)))), ((int)(((byte)(72)))));
             this.lblRecordsText.Location = new System.Drawing.Point(25, 628);
             this.lblRecordsText.Name = "lblRecordsText";
             this.lblRecordsText.Size = new System.Drawing.Size(95, 28);
@@ -293,7 +316,7 @@
             // 
             this.lblRecordCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblRecordCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
-            this.lblRecordCount.ForeColor = System.Drawing.Color.FromArgb(0, 90, 156);
+            this.lblRecordCount.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(90)))), ((int)(((byte)(156)))));
             this.lblRecordCount.Location = new System.Drawing.Point(122, 628);
             this.lblRecordCount.Name = "lblRecordCount";
             this.lblRecordCount.Size = new System.Drawing.Size(80, 28);
